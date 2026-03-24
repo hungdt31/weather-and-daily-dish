@@ -75,7 +75,27 @@ OPENWEATHER_API_KEY = "your-openweather-api-key"
 
 ---
 
-## Running the Application 🚀
+## 2. AI Agents Architecture
+The architecture is based on a Multi-Agent System (MAS), composed of sub-agents that perform specialized tasks seamlessly. It uses a **Router** function to act as the primary interface, dispatching queries to the appropriate specialized sub-agent based on intent.
+
+## 3. MemoryAgent
+The `MemoryAgent` provides short-term context. It stores recent queries and data natively in memory dictionaries, allowing stateful conversations (e.g., retrieving previous weather updates if the user asks a follow-up question).
+
+## 4. Weather Agent
+The `WeatherAgent` leverages external APIs to hook real-time capabilities into the chatbot. It natively constructs requests given a city string, parses the JSON payload from the **OpenWeather API**, and returns a conversational summary involving temperature and weather description.
+
+## 5. The Daily Dish Agent
+The `DailyDishAgent` handles restaurant inquiries using RAG (Retrieval-Augmented Generation) principles. It reads the local PDF `The-Daily-Dish-FAQ.pdf`, cleans the text using regular expressions (`re`), builds TF-IDF vectors using `scikit-learn`, and maps incoming user questions to the exact FAQ response via **Cosine Similarity**.
+
+## 6. Routing Queries
+The `route_query` capability decides where the unstructured natural language inputs should be sent. By using optimized keyword searching and query processing (with synonyms injection like "fish" -> "seafood"), it properly distinguishes between regular restaurant queries and real-time weather inquiries.
+
+## 7. Chatbot Function: Process User Queries
+The main execution loop operates dynamically to provide answers. The Chatbot wraps the logic together: it reads the prompt from the user, engages the Router to pick the relevant logic tree, calls the chosen Agent, and echoes the returned output into the chat session. This has been beautifully encapsulated in the `app.py` Streamlit script.
+
+---
+
+## 8. Running the Application 🚀
 
 You can interact with the chatbot in two ways:
 
