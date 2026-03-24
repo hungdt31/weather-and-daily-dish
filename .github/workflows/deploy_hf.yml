@@ -21,4 +21,11 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          rm -rf .git
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b main
+          git add .
+          git commit -m "Auto-deploy (flat history)"
           git push --force https://kkoi31:$HF_TOKEN@huggingface.co/spaces/kkoi31/first_space main
