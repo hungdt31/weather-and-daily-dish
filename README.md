@@ -1,3 +1,12 @@
+---
+title: Weather Daily Dish Agent
+emoji: 🍽️
+colorFrom: yellow
+colorTo: blue
+sdk: streamlit
+app_file: app.py
+pinned: false
+---
 # Lab: Building AI Agents from Scratch with Python
 
 **Estimated time needed:** 30 minutes
