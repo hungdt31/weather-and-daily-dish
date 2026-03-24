@@ -11,6 +11,10 @@ pinned: false
 
 **Estimated time needed:** 30 minutes
 
+<div align="center">
+  <img src="image.png" alt="App Screenshot" width="800"/>
+</div>
+
 ## Overview
 This lab powers real-world applications such as a **Weather AI Agent** and **The Daily Dish customer-service chatbot**. In this hands-on project, you’ll apply core agentic AI principles to solve practical problems, design and orchestrate multi-agent systems, integrate external tools, memory, and document-based knowledge sources, and implement intelligent routing between specialized agents.
 
@@ -77,6 +81,25 @@ OPENWEATHER_API_KEY = "your-openweather-api-key"
 
 ## 2. AI Agents Architecture
 The architecture is based on a Multi-Agent System (MAS), composed of sub-agents that perform specialized tasks seamlessly. It uses a **Router** function to act as the primary interface, dispatching queries to the appropriate specialized sub-agent based on intent.
+
+```mermaid
+graph TD
+    User([User]) -->|Inputs Prompt| UI[Streamlit UI Chatbot]
+    UI --> QP[Query Processor <br> *Cleans & Expands Synonyms*]
+    QP --> Router{Router <br> *Checks Weather Keywords*}
+    
+    %% Weather Branch
+    Router -->|If Keyword Found| WA[Weather Agent]
+    WA <-->|Fetch/Save previous state| MA[(Memory Agent)]
+    WA <-->|REST API request| API((OpenWeather API))
+    
+    %% Restaurant Branch
+    Router -->|Default Route| DDA[Daily Dish Agent]
+    DDA <-->|RAG + TF-IDF Cosine Similarity| PDF[(FAQ PDF Knowledge)]
+    
+    WA -->|Returns Formatting| UI
+    DDA -->|Returns Best Match| UI
+```
 
 ## 3. MemoryAgent
 The `MemoryAgent` provides short-term context. It stores recent queries and data natively in memory dictionaries, allowing stateful conversations (e.g., retrieving previous weather updates if the user asks a follow-up question).
