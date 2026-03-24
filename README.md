@@ -100,8 +100,9 @@ The repository includes an automatic GitHub Actions workflow (`.github/workflows
 1. Create a Hugging Face Space (Streamlit).
 2. Grab your Access Token securely from Hugging Face Settings.
 3. In your GitHub repository, configure a Secret named `HF_TOKEN`.
-4. Update `deploy_hf.yml` with your HF username and space name.
-5. Push to the `main` branch!
+4. In your **Hugging Face Space**, go to **Settings > Variables and secrets** and create a new secret named `OPENWEATHER_API_KEY` with your API key.
+5. Update `deploy_hf.yml` with your HF username and space name.
+6. Push to the `main` branch!
 
 ---
 

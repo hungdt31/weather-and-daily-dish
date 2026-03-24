@@ -128,10 +128,16 @@ def setup_agents():
     
     # 3. Setup Agents
     # Note: the API key should ideally be loaded from an environment variable or secrets
-    # Get API key from Streamlit secrets or default environment variables
-    API_KEY = st.secrets.get("OPENWEATHER_API_KEY", os.getenv("OPENWEATHER_API_KEY"))
+    # Get API key safely from environment variables (Hugging Face) or local secrets (Streamlit)
+    API_KEY = os.environ.get("OPENWEATHER_API_KEY")
     if not API_KEY:
-        st.error("Missing OpenWeather API Key. Please add OPENWEATHER_API_KEY to your secrets.")
+        try:
+            API_KEY = st.secrets.get("OPENWEATHER_API_KEY")
+        except Exception:
+            pass
+            
+    if not API_KEY:
+        st.error("Missing OpenWeather API Key. Please add OPENWEATHER_API_KEY to your environment variables or secrets.")
     memory_agent = MemoryAgent()
     weather_agent = WeatherAgent(API_KEY, memory_agent)
     daily_dish_agent = DailyDishAgent(faq_questions, faq_answers)
